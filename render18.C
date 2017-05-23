@@ -28,11 +28,15 @@ render18->Write("render18",TObject::kOverwrite);
 
 	Int_t dect1,dect2,dect3,dect4,dect5,dect6,dect7,dect8,dect9,dect10,dect11,dect12,dect13,dect14,dect15,dect16;
 
-	Double_t Adect1,Adect2,Adect3,Adect4,Adect5,Adect6,Adect7,Adect8,Adect9,Adect10,Adect11,Adect12,Adect13,Adect14,Adect15,Adect16;
+  Double_t rs1,rs2,rs3,rs4,rs5,rs6,rs7,rs8,rs9,rs10,rs11,rs12,rs13, rs14,rs15,rs16;
+
+	Double_t Adect1,Adect2,Adect3,Adect4,Adect5,Adect6,Adect7,Adect8,Adect9,Adect10,Adect11,Adect12,Adect13,Adect14,Adect15,Adect16,max;
 
 	Double_t xarribatodos,yarribatodos, abajotodos;
 
-        Double_t xarribatodosa,yarribatodosa, abajotodosa;
+  Double_t xarribatodosa,yarribatodosa, abajotodosa;
+
+
 
 
 	Double_t  xt, yt ,xta, yta;
@@ -51,11 +55,13 @@ render18->Write("render18",TObject::kOverwrite);
 
 
 //Posiciones de los Detectores
-  Double_t Adetvec[16];
+  Double_t Adetvec[16],normVec[16];
 
   Double_t posdetxvec[16] = {79.35, 49.35, 34.35, 2.5, 0., 2.5, 34.35, 49.35, 79.35, 109.35, 124.35, 156.35, 158.7, 156.2, 124.35, 109.35};
 
   Double_t posdetyvec[16] = {0., 0., 0., 2.5, 35.0, 67.5, 70., 70., 70., 70., 70., 67.5, 35., 2.5, 0., 0.};
+
+  Float inda[16];
 
 
 render18->Branch("ADetector1render18",&Adect1,"Adect1/D");
@@ -108,11 +114,44 @@ render18->Branch("ADetectorExt2render18",&ADetectorExt2,"ADetectorExt2/I");
 
 render18->Branch("cuentasIFS",&cuentasIFS,"cuentasIFS/I");
 
+//Read the data base
+
+
+int j = 0;
+TMatrixD relSigsM(10833,16);
+Double_t relSigEvent[16];
+
 FILE *relSigs;
+relSigs = fopen("realSigs.txt","r");
+while(!feof(realSigs))  {
+
+  fscanf(realSigs,"%d %d %d %d %d %d %d %d",&rs1,&rs2,&rs3,&rs4,&rs5,&rs6,&rs7,&rs8);
+  fscanf(realSigs,"%d %d %d %d %d %d %d %d",&rs9,&rs10,&rs11,&rs12,&rs13,&rs14,&rs15,&rs16);
+
+  relSigEvent[0]=rs1;
+  relSigEvent[1]=rs2;
+  relSigEvent[2]=rs3;
+  relSigEvent[3]=rs4;
+  relSigEvent[4]=rs5;
+  relSigEvent[5]=rs6;
+  relSigEvent[6]=rs7;
+  relSigEvent[7]=rs8;
+  relSigEvent[8]=rs9;
+  relSigEvent[9]=rs10;
+  relSigEvent[10]=rs11;
+  relSigEvent[11]=rs12;
+  relSigEvent[12]=rs13;
+  relSigEvent[13]=rs14;
+  relSigEvent[14]=rs15;
+  relSigEvent[15]=rs16;
+
+  for (int i=0; i<16; i++){
+    relSigsM(j,i)=realSigEvent[i];
+    }
+    j++;
+}
+
 FILE *out;
-
-relSigs = fopen("",);
-
 out=fopen(name,"r");
 printf("opening %s\n",name);
 int count = 0;
@@ -125,8 +164,8 @@ while(!feof(out))  {
 	fscanf(out,"%d %d %d %d %d %d %d %d",&d9,&d10,&d11,&d12,&d13,&d14,&d15,&d16);
 	count+=1;
 	count1=0;
-
-//Detectores Externos
+  if ( !d1 == 0 ) {
+//External Detectors
 
 		DetectorExt1=0;
 		ADetectorExt1=0;
@@ -147,13 +186,15 @@ while(!feof(out))  {
 	}
 
 
-//Detectores MONDE
+// MONDE detectors
+
 	for (int i=0; i<16; i++){
+
             Adetvec[i]=0;
             theta[i]=0;
-	    emenospx[i]=0;
-	    emenospx[i]=0;
-	    normemenosp[i]=0;
+	          emenospx[i]=0;
+	          emenospx[i]=0;
+	          normemenosp[i]=0;
         }
 
 		dect1=0;
@@ -168,7 +209,7 @@ while(!feof(out))  {
 
 	}
 
-	        dect2=0;
+	  dect2=0;
 		Adect2=0;
 	if (d2<BIASmax && d2>BIASmin) {
 
@@ -344,6 +385,14 @@ while(!feof(out))  {
 
 	}
 
+ //Normalization of Event
+
+ max=0;
+ TMath::Sort(size,Adetvec,inda,kTRUE);
+ max=inda[0]
+ for (int i=0; i<16; i++){
+           normVec[i]= Adetvec[i]/max;
+       }
 
 
 	cuentasIFS=count1;
@@ -355,7 +404,7 @@ while(!feof(out))  {
 	yt=0;
 
 
-// Posicion TODOS
+// Anger Position
 
 
 if(cuentasIFS>=2){
@@ -379,6 +428,7 @@ if(cuentasIFS>=2){
 render18->Fill();
 
 
+}
 
 }
 

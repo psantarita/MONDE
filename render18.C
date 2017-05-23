@@ -31,7 +31,7 @@ render18->Write("render18",TObject::kOverwrite);
 	Double_t Adect1,Adect2,Adect3,Adect4,Adect5,Adect6,Adect7,Adect8,Adect9,Adect10,Adect11,Adect12,Adect13,Adect14,Adect15,Adect16;
 
 	Double_t xarribatodos,yarribatodos, abajotodos;
-        
+
         Double_t xarribatodosa,yarribatodosa, abajotodosa;
 
 
@@ -46,57 +46,18 @@ render18->Write("render18",TObject::kOverwrite);
 	BIASmax=5000;
 
 	BIASmin=50;
-	
-	
+
+
 
 
 //Posiciones de los Detectores
- 
-         Double_t Adetvec[16];
-	
-	 Double_t posdetxvec[16] = {79.35, 49.35, 34.35, 2.5, 0., 2.5, 34.35, 49.35, 79.35, 109.35, 124.35, 156.35, 158.7, 156.2, 124.35, 109.35};
-	 
-	 Double_t posdetyvec[16] = {0., 0., 0., 2.5, 35.0, 67.5, 70., 70., 70., 70., 70., 67.5, 35., 2.5, 0., 0.};
+  Double_t Adetvec[16];
 
-         Double_t normdet[16] = {79.3, 49.3, 34.3, 3.5, 35.0, 67.5, 77.9, 85.6, 105.8, 129.8, 142.6, 170.2, 162.5, 156.0, 124.3, 109.3};
+  Double_t posdetxvec[16] = {79.35, 49.35, 34.35, 2.5, 0., 2.5, 34.35, 49.35, 79.35, 109.35, 124.35, 156.35, 158.7, 156.2, 124.35, 109.35};
 
-	 Double_t emenospx[16], emenospy[16], normemenosp[16];
-         
- //        Double_t aux1[16],aux2[16],aux3[16],C[16];
-         
-         Double_t distangsol; 
-         
-         Double_t angsol[16];
-        
-         Double_t theta[16];
-         
-         Double_t oxx=1;
-         Double_t oxy=0;
-         Double_t oyx=0;
-         Double_t oyy=1;
-         
-         Double_t oxxa=-1;
-         Double_t oxya=0;
-         
-         Double_t o4x=1;
-         Double_t o4y=1;
-         Double_t o6x=1;
-         Double_t o6y=-1;
-         Double_t o12x=-1;
-         Double_t o12y=-1;
-         Double_t o14x=-1;
-         Double_t o14y=1;
-         Double_t normOX = 1;
-         Double_t normOY = 1;
-         Double_t normO4 = 1.42;
-         Double_t normO6 = 1.42;
-         Double_t normO12 = 1.42;
-         Double_t normO14 = 1.42; 
-         
-         Double_t auxnum, auxdem, auxcos;
-         
+  Double_t posdetyvec[16] = {0., 0., 0., 2.5, 35.0, 67.5, 70., 70., 70., 70., 70., 67.5, 35., 2.5, 0., 0.};
 
- 
+
 render18->Branch("ADetector1render18",&Adect1,"Adect1/D");
 render18->Branch("ADetector2render18",&Adect2,"Adect2/D");
 render18->Branch("ADetector3render18",&Adect3,"Adect3/D");
@@ -121,12 +82,7 @@ render18->Branch("ytrender18",&yt,"yt/D");
 render18->Branch("xtarender18",&xta,"xta/D");
 render18->Branch("ytarender18",&yta,"yta/D");
 
-
-Double_t norme;
-
-
-
-// Detectores Externos
+// Detectores Externo
 
 	Int_t DetectorExt1, DetectorExt2;
 	Int_t d1ext, d2ext;
@@ -142,16 +98,16 @@ render18->Branch("ADetectorExt2render18",&ADetectorExt2,"ADetectorExt2/I");
 
 
 	BIASminext=0;
-	BIASmaxext=409000;
+	BIASmaxext=4000;
 
 //Dectector Externo 1
 
-	
+
 
 	Int_t cuentasIFS;
 
 render18->Branch("cuentasIFS",&cuentasIFS,"cuentasIFS/I");
-	
+
 FILE *relSigs;
 FILE *out;
 
@@ -169,22 +125,22 @@ while(!feof(out))  {
 	fscanf(out,"%d %d %d %d %d %d %d %d",&d9,&d10,&d11,&d12,&d13,&d14,&d15,&d16);
 	count+=1;
 	count1=0;
-	
+
 //Detectores Externos
 
 		DetectorExt1=0;
 		ADetectorExt1=0;
         if (d1ext<BIASmaxext && d1ext>BIASminext) {
-	  
+
 		DetectorExt1=d1ext;
-		ADetectorExt1=(1*DetectorExt1)+0; 
+		ADetectorExt1=(1*DetectorExt1)+0;
 	}
-	
+
 
 		DetectorExt2=0;
 		ADetectorExt2=0;
 	if (d2ext<BIASmaxext && d2ext>BIASminext) {
-		
+
 		DetectorExt2=d2ext;
 		ADetectorExt2=(1*DetectorExt2)+0;
 
@@ -231,8 +187,6 @@ while(!feof(out))  {
 		Adect3=(1.0*dect3)+0;
 		Adetvec[2] = Adect3;
 
-
-
 	}
 
 		dect4=0;
@@ -253,7 +207,7 @@ while(!feof(out))  {
 
 		count1+=1;
 		dect5=d5;
-		Adect5=(1.0*dect5)+0; 
+		Adect5=(1.0*dect5)+0;
 		Adetvec[4] = Adect5;
 
 
@@ -280,7 +234,7 @@ while(!feof(out))  {
 		Adetvec[6] = Adect7;
 
 
- 
+
 
 	}
 		dect8=0;
@@ -289,20 +243,18 @@ while(!feof(out))  {
 
 		count1+=1;
 		dect8=d8;
-		Adect8=(1.0*dect8)+0; 
+		Adect8=(1.0*dect8)+0;
 		Adetvec[7] = Adect8;
 
-
-
 	}
-	
+
 		dect9=0;
 		Adect9=0;
 	if (d9<BIASmax && d9>BIASmin) {
 
 		count1+=1;
 		dect9=d9;
-		Adect9=(1.0*dect9)+0; 
+		Adect9=(1.0*dect9)+0;
 		Adetvec[8] = Adect9;
 
 
@@ -326,7 +278,7 @@ while(!feof(out))  {
 
 		count1+=1;
 		dect11=d11;
-		Adect11=(1.0*dect11)+0; 
+		Adect11=(1.0*dect11)+0;
 		Adetvec[10] = Adect11;
 
 
@@ -337,7 +289,7 @@ while(!feof(out))  {
 
 		count1+=1;
 		dect12=d12;
-		Adect12=(1.0*dect12)+0; 
+		Adect12=(1.0*dect12)+0;
 		Adetvec[11] = Adect12;
 
 
@@ -349,7 +301,7 @@ while(!feof(out))  {
 
 		count1+=1;
 		dect13=d13;
-		Adect13=(1.0*dect13)+0; 
+		Adect13=(1.0*dect13)+0;
 		Adetvec[12] = Adect13;
 
 
@@ -361,7 +313,7 @@ while(!feof(out))  {
 
 		count1+=1;
 		dect14=d14;
-		Adect14=(1.0*dect14)+0; 
+		Adect14=(1.0*dect14)+0;
 		Adetvec[13] = Adect14;
 
 
@@ -374,26 +326,26 @@ while(!feof(out))  {
 
 		count1+=1;
 		dect15=d15;
-		Adect15=(1.0*dect15)+0; 
+		Adect15=(1.0*dect15)+0;
 		Adetvec[14] = Adect15;
 
 
 	}
 		dect16=0;
 		Adect16=0;
-                
+
 	if (d16<BIASmax && d16>BIASmin) {
 
 		count1+=1;
 		dect16=d16;
 		Adect16=(1.0*dect16)+0;
-		Adetvec[15] = Adect16; 
+		Adetvec[15] = Adect16;
 
 
 	}
 
 
-	
+
 	cuentasIFS=count1;
 
 	xarribatodos=0;
@@ -404,11 +356,11 @@ while(!feof(out))  {
 
 
 // Posicion TODOS
- 
+
 
 if(cuentasIFS>=2){
-  
-	  
+
+
 	for (int i=0; i<16; i++){
 
 				xarribatodos += posdetxvec[i]*Adetvec[i];
@@ -418,17 +370,17 @@ if(cuentasIFS>=2){
 			}
 
 
-			xt= (xarribatodos/abajotodos);  
+			xt= (xarribatodos/abajotodos);
 			yt= (yarribatodos/abajotodos);
-		
-		
+
+
 	}
 
 render18->Fill();
 
-	
 
-} 
+
+}
 
 cout << "The Number of Events is: " << count <<endl;
 

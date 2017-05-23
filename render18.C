@@ -152,8 +152,10 @@ render18->Branch("ADetectorExt2render18",&ADetectorExt2,"ADetectorExt2/I");
 
 render18->Branch("cuentasIFS",&cuentasIFS,"cuentasIFS/I");
 	
-
+FILE *relSigs;
 FILE *out;
+
+relSigs = fopen("",);
 
 out=fopen(name,"r");
 printf("opening %s\n",name);
@@ -406,37 +408,31 @@ while(!feof(out))  {
 
 if(cuentasIFS>=2){
   
-  
-for (int i=0; i<16; i++){
+	  
+	for (int i=0; i<16; i++){
 
-		xarribatodos += posdetxvec[i]*Adetvec[i];
-		yarribatodos += posdetyvec[i]*Adetvec[i];
-		abajotodos += Adetvec[i];
+				xarribatodos += posdetxvec[i]*Adetvec[i];
+				yarribatodos += posdetyvec[i]*Adetvec[i];
+				abajotodos += Adetvec[i];
 
-		}
+			}
 
 
-		xt= (xarribatodos/abajotodos);  
-		yt= (yarribatodos/abajotodos);
+			xt= (xarribatodos/abajotodos);  
+			yt= (yarribatodos/abajotodos);
 		
 		
-		
+	}
 
-}
+render18->Fill();
 
-render18->Fill();	
+	
 
 } 
 
 cout << "The Number of Events is: " << count <<endl;
 
-
-
-
-
-
 fclose(out);
-
 
 f->Write("",TObject::kOverwrite);
 

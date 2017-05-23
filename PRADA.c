@@ -1,15 +1,15 @@
-int j,k,counter;
+int m,n,counter;
 double minDiff,diff,sum,treshold;
 minDiff = 100;
 treshold = 0.2;
-for(j=0;j<10833;j++)
+for(m=0;m<10833;m++)
 {
   sum = 0;
-  for(k=0;k<=15;k++)
+  for(n=0;n<=15;n++)
     {
-    if(normVec[k]<=treshold)
+    if(normVec[n]<=treshold)
         {
-        diff=normVec[k]-relSigsM[j][k];
+        diff=normVec[n]-relSigsM[m][n];
         diff *= diff;
         sum += diff;
         }
@@ -17,7 +17,7 @@ for(j=0;j<10833;j++)
   if (sum<minDiff)
   {
     minDiff = sum;
-    counter = j;
+    counter = m;
     printf("Counter actualizado: %i \n",counter );
   }
 }

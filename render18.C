@@ -23,6 +23,7 @@ TTree *render18 = new TTree("render18","Tree data");
 
 render18->Write("render18",TObject::kOverwrite);
 
+printf("var Declarations ini ");
 
 	Int_t d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16;
 
@@ -34,12 +35,9 @@ render18->Write("render18",TObject::kOverwrite);
 
 	Double_t xarribatodos,yarribatodos, abajotodos;
 
-  Double_t xarribatodosa,yarribatodosa, abajotodosa;
+  Double_t xarribatodosa,yarribatodosa, abajotodosa,pointList1,pointList2;
 
-
-
-
-	Double_t  xt, yt ,xta, yta;
+	Double_t  xt, yt,xPrada,yPrada;
 
 	Double_t posdetx1,posdetx2,posdetx3,posdetx4,posdetx5,posdetx6,posdetx7,posdetx8,posdetx9,posdetx10,posdetx11,posdetx12,posdetx13,posdetx14,posdetx15,posdetx16;
 	Double_t posdety1,posdety2,posdety3,posdety4,posdety5,posdety6,posdety7,posdety8,posdety9,posdety10,posdety11,posdety12,posdety13,posdety14,posdety15,posdety16;
@@ -61,8 +59,9 @@ render18->Write("render18",TObject::kOverwrite);
 
   Double_t posdetyvec[16] = {0., 0., 0., 2.5, 35.0, 67.5, 70., 70., 70., 70., 70., 67.5, 35., 2.5, 0., 0.};
 
-  Float inda[16];
+  float inda[16];
 
+  printf("var Declarations");
 
 render18->Branch("ADetector1render18",&Adect1,"Adect1/D");
 render18->Branch("ADetector2render18",&Adect2,"Adect2/D");
@@ -85,8 +84,9 @@ render18->Branch("ADetector16render18",&Adect16,"Adect16/D");
 render18->Branch("xtrender18",&xt,"xt/D");
 render18->Branch("ytrender18",&yt,"yt/D");
 
-render18->Branch("xtarender18",&xta,"xta/D");
-render18->Branch("ytarender18",&yta,"yta/D");
+render18->Branch("xPradarender18",&xPrada,"xPrada/D");
+render18->Branch("yPradarender18",&yPrada,"yPrada/D");
+printf("make branch");
 
 // Detectores Externo
 
@@ -106,27 +106,54 @@ render18->Branch("ADetectorExt2render18",&ADetectorExt2,"ADetectorExt2/I");
 	BIASminext=0;
 	BIASmaxext=4000;
 
-//Dectector Externo 1
+//PRADA Declarations
 
+int m,n,counter;
+double minDiff,diff,sum,treshold;
+minDiff = 100;
+treshold = 0.2;
 
 
 	Int_t cuentasIFS;
 
 render18->Branch("cuentasIFS",&cuentasIFS,"cuentasIFS/I");
 
+//read the points list
+printf("read plist");
+
+int k = 0;
+TMatrixD pointListM(10833,2);
+Double_t pointListEvent[2];
+
+FILE *pointList;
+pointList = fopen("pointList.txt","r");
+while(!feof(pointList))  {
+
+  fscanf(pointList,"%d %d",&pointList1, &pointList2);
+
+  pointListEvent[0]=pointList1;
+  pointListEvent[1]=pointList2;
+
+  for (int i=0; i<2; i++){
+    pointListM(k,i)=pointListEvent[i];
+    }
+    k++;
+}
+
 //Read the data base
+printf("read database");
 
 
 int j = 0;
-TMatrixD relSigsM(10833,16);
+double relSigsM[10833][16];
 Double_t relSigEvent[16];
 
 FILE *relSigs;
-relSigs = fopen("realSigs.txt","r");
-while(!feof(realSigs))  {
+relSigs = fopen("relSigs.txt","r");
+while(!feof(relSigs))  {
 
-  fscanf(realSigs,"%d %d %d %d %d %d %d %d",&rs1,&rs2,&rs3,&rs4,&rs5,&rs6,&rs7,&rs8);
-  fscanf(realSigs,"%d %d %d %d %d %d %d %d",&rs9,&rs10,&rs11,&rs12,&rs13,&rs14,&rs15,&rs16);
+  fscanf(relSigs,"%d %d %d %d %d %d %d %d",&rs1,&rs2,&rs3,&rs4,&rs5,&rs6,&rs7,&rs8);
+  fscanf(relSigs,"%d %d %d %d %d %d %d %d",&rs9,&rs10,&rs11,&rs12,&rs13,&rs14,&rs15,&rs16);
 
   relSigEvent[0]=rs1;
   relSigEvent[1]=rs2;
@@ -146,7 +173,7 @@ while(!feof(realSigs))  {
   relSigEvent[15]=rs16;
 
   for (int i=0; i<16; i++){
-    relSigsM(j,i)=realSigEvent[i];
+    relSigsM(j,i)=relSigEvent[i];
     }
     j++;
 }
@@ -274,9 +301,6 @@ while(!feof(out))  {
 		Adect7=(1.0*dect7)+0;
 		Adetvec[6] = Adect7;
 
-
-
-
 	}
 		dect8=0;
 		Adect8=0;
@@ -357,9 +381,6 @@ while(!feof(out))  {
 		Adect14=(1.0*dect14)+0;
 		Adetvec[13] = Adect14;
 
-
-
-
 	}
 		dect15=0;
 		Adect15=0;
@@ -386,13 +407,41 @@ while(!feof(out))  {
 	}
 
  //Normalization of Event
-
+printf("norm");
  max=0;
  TMath::Sort(size,Adetvec,inda,kTRUE);
  max=inda[0]
  for (int i=0; i<16; i++){
            normVec[i]= Adetvec[i]/max;
        }
+
+//PRADA
+printf("prada");
+
+
+for(m=0;m<10832;m++)
+{
+  sum = 0;
+  for(n=0;n<=15;n++)
+    {
+    if(normVec[n]<=treshold)
+        {
+          printf("Getting element: %i %i",m,n);
+        diff=normVec[n]-relSigsM[m][n];
+        diff *= diff;
+        sum += diff;
+        }
+    }
+  if (sum<minDiff)
+  {
+    minDiff = sum;
+    counter = m;
+  }
+}
+xPrada=pointListM[counter-1][0];
+yPrada=pointListM[counter-1][1];
+
+
 
 
 	cuentasIFS=count1;
@@ -409,7 +458,6 @@ while(!feof(out))  {
 
 if(cuentasIFS>=2){
 
-
 	for (int i=0; i<16; i++){
 
 				xarribatodos += posdetxvec[i]*Adetvec[i];
@@ -418,10 +466,8 @@ if(cuentasIFS>=2){
 
 			}
 
-
 			xt= (xarribatodos/abajotodos);
 			yt= (yarribatodos/abajotodos);
-
 
 	}
 

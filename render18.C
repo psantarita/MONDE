@@ -7,15 +7,12 @@
 #include <TStyle.h>
 #include <Riostream.h>
 
-
-
-
 void render18(char *name="NOTHING", char *rootFile="render18.root")
 {
 
-
  printf("The argument is %s\n", name);
  printf("The second argument is %s\n", rootFile);
+ printf("2");
 
 TFile *f = new TFile(rootFile,"UPDATE");
 
@@ -29,13 +26,14 @@ printf("var Declarations ini ");
 
 	Int_t dect1,dect2,dect3,dect4,dect5,dect6,dect7,dect8,dect9,dect10,dect11,dect12,dect13,dect14,dect15,dect16;
 
-  Double_t rs1,rs2,rs3,rs4,rs5,rs6,rs7,rs8,rs9,rs10,rs11,rs12,rs13, rs14,rs15,rs16;
+  double rs1,rs2,rs3,rs4,rs5,rs6,rs7,rs8,rs9,rs10,rs11,rs12,rs13, rs14,rs15,rs16;
 
 	Double_t Adect1,Adect2,Adect3,Adect4,Adect5,Adect6,Adect7,Adect8,Adect9,Adect10,Adect11,Adect12,Adect13,Adect14,Adect15,Adect16,max;
 
 	Double_t xarribatodos,yarribatodos, abajotodos;
 
-  Double_t xarribatodosa,yarribatodosa, abajotodosa,pointList1,pointList2;
+  Double_t xarribatodosa,yarribatodosa, abajotodosa;
+  int pointList1,pointList2;
 
 	Double_t  xt, yt,xPrada,yPrada;
 
@@ -48,6 +46,8 @@ printf("var Declarations ini ");
 	BIASmax=5000;
 
 	BIASmin=50;
+
+  long long size=16;
 
 
 
@@ -111,7 +111,7 @@ render18->Branch("ADetectorExt2render18",&ADetectorExt2,"ADetectorExt2/I");
 int m,n,counter;
 double minDiff,diff,sum,treshold;
 minDiff = 100;
-treshold = 0.2;
+treshold = 0.15;
 
 
 	Int_t cuentasIFS;
@@ -122,20 +122,20 @@ render18->Branch("cuentasIFS",&cuentasIFS,"cuentasIFS/I");
 printf("read plist");
 
 int k = 0;
-TMatrixD pointListM(10833,2);
-Double_t pointListEvent[2];
+float pointListM[10833][2];
+float pointListEvent[2];
 
 FILE *pointList;
 pointList = fopen("pointList.txt","r");
-while(!feof(pointList))  {
+while(!feof(pointList)&&k<10833)  {
 
-  fscanf(pointList,"%d %d",&pointList1, &pointList2);
+  fscanf(pointList,"%i %i",&pointList1, &pointList2);
 
   pointListEvent[0]=pointList1;
   pointListEvent[1]=pointList2;
 
-  for (int i=0; i<2; i++){
-    pointListM(k,i)=pointListEvent[i];
+  for (int h=0; h<2; h++){
+    pointListM[k][h]=pointListEvent[h];
     }
     k++;
 }
@@ -150,10 +150,11 @@ Double_t relSigEvent[16];
 
 FILE *relSigs;
 relSigs = fopen("relSigs.txt","r");
-while(!feof(relSigs))  {
+while(!feof(relSigs)&&j<10833)  {
 
-  fscanf(relSigs,"%d %d %d %d %d %d %d %d",&rs1,&rs2,&rs3,&rs4,&rs5,&rs6,&rs7,&rs8);
-  fscanf(relSigs,"%d %d %d %d %d %d %d %d",&rs9,&rs10,&rs11,&rs12,&rs13,&rs14,&rs15,&rs16);
+  fscanf(relSigs,"%lf %lf %lf
+  %lf %lf %lf %lf %lf",&rs1,&rs2,&rs3,&rs4,&rs5,&rs6,&rs7,&rs8);
+  fscanf(relSigs,"%lf %lf %lf %lf %lf %lf %lf %lf",&rs9,&rs10,&rs11,&rs12,&rs13,&rs14,&rs15,&rs16);
 
   relSigEvent[0]=rs1;
   relSigEvent[1]=rs2;
@@ -172,9 +173,10 @@ while(!feof(relSigs))  {
   relSigEvent[14]=rs15;
   relSigEvent[15]=rs16;
 
-  for (int i=0; i<16; i++){
-    relSigsM(j,i)=relSigEvent[i];
+  for (int i=0; i<=15; i++){
+    relSigsM[j][i]=relSigEvent[i];
     }
+
     j++;
 }
 
@@ -186,14 +188,14 @@ int count1 = 0;
 int count2 = 0;
 while(!feof(out))  {
 
-	fscanf(out,"%d %d",&d1ext, &d2ext);
+	//fscanf(out,"%d %d",&d1ext, &d2ext);
 	fscanf(out,"%d %d %d %d %d %d %d %d",&d1,&d2,&d3,&d4,&d5,&d6,&d7,&d8);
 	fscanf(out,"%d %d %d %d %d %d %d %d",&d9,&d10,&d11,&d12,&d13,&d14,&d15,&d16);
 	count+=1;
 	count1=0;
   if ( !d1 == 0 ) {
 //External Detectors
-
+/*
 		DetectorExt1=0;
 		ADetectorExt1=0;
         if (d1ext<BIASmaxext && d1ext>BIASminext) {
@@ -211,22 +213,20 @@ while(!feof(out))  {
 		ADetectorExt2=(1*DetectorExt2)+0;
 
 	}
-
+*/
 
 // MONDE detectors
 
 	for (int i=0; i<16; i++){
 
             Adetvec[i]=0;
-            theta[i]=0;
-	          emenospx[i]=0;
-	          emenospx[i]=0;
-	          normemenosp[i]=0;
+
         }
 
 		dect1=0;
 		Adect1=0;
-	if (d1<BIASmax && d1>BIASmin) {
+	//if (d1<BIASmax && d1>BIASmin) {
+  if (true) {
 
 		count1+=1;
 		dect1=d1;
@@ -238,8 +238,8 @@ while(!feof(out))  {
 
 	  dect2=0;
 		Adect2=0;
-	if (d2<BIASmax && d2>BIASmin) {
-
+	//if (d2<BIASmax && d2>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect2=d2;
 		Adect2=(1.0*dect2)+0;
@@ -248,8 +248,8 @@ while(!feof(out))  {
 	}
 		dect3=0;
 		Adect3=0;
-	if (d3<BIASmax && d3>BIASmin) {
-
+	//if (d3<BIASmax && d3>BIASmin) {
+    if (true) {
 		count1+=1;
 		dect3=d3;
 		Adect3=(1.0*dect3)+0;
@@ -259,8 +259,8 @@ while(!feof(out))  {
 
 		dect4=0;
 		Adect4=0;
-	if (d4<BIASmax && d4>BIASmin) {
-
+	//if (d4<BIASmax && d4>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect4=d4;
 		Adect4=(1.0*dect4)-0;
@@ -271,8 +271,8 @@ while(!feof(out))  {
 	}
 		dect5=0;
 		Adect5=0;
-	if (d5<BIASmax && d5>BIASmin) {
-
+	//if (d5<BIASmax && d5>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect5=d5;
 		Adect5=(1.0*dect5)+0;
@@ -283,8 +283,8 @@ while(!feof(out))  {
 	}
 		dect6=0;
 		Adect6=0;
-	if (d6<BIASmax && d6>BIASmin) {
-
+	//if (d6<BIASmax && d6>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect6=d6;
 		Adect6=(1.0*dect6)-0;
@@ -294,8 +294,8 @@ while(!feof(out))  {
 	}
 		dect7=0;
 		Adect7=0;
-	if (d7<BIASmax && d7>BIASmin) {
-
+	//if (d7<BIASmax && d7>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect7=d7;
 		Adect7=(1.0*dect7)+0;
@@ -304,8 +304,8 @@ while(!feof(out))  {
 	}
 		dect8=0;
 		Adect8=0;
-	if (d8<BIASmax && d8>BIASmin) {
-
+	//if (d8<BIASmax && d8>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect8=d8;
 		Adect8=(1.0*dect8)+0;
@@ -315,8 +315,8 @@ while(!feof(out))  {
 
 		dect9=0;
 		Adect9=0;
-	if (d9<BIASmax && d9>BIASmin) {
-
+	//if (d9<BIASmax && d9>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect9=d9;
 		Adect9=(1.0*dect9)+0;
@@ -327,8 +327,8 @@ while(!feof(out))  {
 	}
 		dect10=0;
 		Adect10=0;
-	if (d10<BIASmax && d10>BIASmin) {
-
+	//if (d10<BIASmax && d10>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect10=d10;
 		Adect10=(1.0*dect10)+0;
@@ -339,8 +339,8 @@ while(!feof(out))  {
 	}
 		dect11=0;
 		Adect11=0;
-	if (d11<BIASmax && d11>BIASmin) {
-
+	//if (d11<BIASmax && d11>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect11=d11;
 		Adect11=(1.0*dect11)+0;
@@ -350,8 +350,8 @@ while(!feof(out))  {
 	}
 		dect12=0;
 		Adect12=0;
-	if (d12<BIASmax && d12>BIASmin) {
-
+	//if (d12<BIASmax && d12>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect12=d12;
 		Adect12=(1.0*dect12)+0;
@@ -362,20 +362,17 @@ while(!feof(out))  {
 	}
 		dect13=0;
 		Adect13=0;
-	if (d13<BIASmax && d13>BIASmin) {
-
+	//if (d13<BIASmax && d13>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect13=d13;
 		Adect13=(1.0*dect13)+0;
 		Adetvec[12] = Adect13;
-
-
-
 	}
 		dect14=0;
 		Adect14=0;
-	if (d14<BIASmax && d14>BIASmin) {
-
+	//if (d14<BIASmax && d14>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect14=d14;
 		Adect14=(1.0*dect14)+0;
@@ -384,8 +381,8 @@ while(!feof(out))  {
 	}
 		dect15=0;
 		Adect15=0;
-	if (d15<BIASmax && d15>BIASmin) {
-
+	//if (d15<BIASmax && d15>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect15=d15;
 		Adect15=(1.0*dect15)+0;
@@ -396,52 +393,62 @@ while(!feof(out))  {
 		dect16=0;
 		Adect16=0;
 
-	if (d16<BIASmax && d16>BIASmin) {
-
+	//if (d16<BIASmax && d16>BIASmin) {
+  if (true) {
 		count1+=1;
 		dect16=d16;
 		Adect16=(1.0*dect16)+0;
 		Adetvec[15] = Adect16;
-
-
 	}
 
  //Normalization of Event
-printf("norm");
- max=0;
- TMath::Sort(size,Adetvec,inda,kTRUE);
- max=inda[0]
+max=0;
+ //TMath::Sort(size,Adetvec,inda,kTRUE);
+for (i = 0; i < 16; i++) {
+  if(Adetvec[i]>Adetvec[int(max)])
+    max = i;
+}
+
+//printf("\nMax element: %f",max);
+ //max=inda[0];
  for (int i=0; i<16; i++){
-           normVec[i]= Adetvec[i]/max;
+           normVec[i]= Adetvec[i]/Adetvec[int(max)];
+           //printf("\n%f / %f = %f  ",Adetvec[i],Adetvec[int(max)],normVec[i]);
        }
 
 //PRADA
-printf("prada");
-
-
-for(m=0;m<10832;m++)
+minDiff=100;
+m=0;
+for(m=0;m<10833;m++)
 {
   sum = 0;
   for(n=0;n<=15;n++)
     {
-    if(normVec[n]<=treshold)
+    if(normVec[n]>treshold)
         {
-          printf("Getting element: %i %i",m,n);
+
         diff=normVec[n]-relSigsM[m][n];
         diff *= diff;
         sum += diff;
+      //  printf("%i,%i: Over treshold with ",m,n);
+          //printf(" %f - %f = %f\n", normVec[n],relSigsM[m][n],diff);
         }
+        //printf("\n\n");
+    //else
+      //printf("%i,%i: Under treshold  ",m,n);
     }
+    //printf("\nActual sum %f  ",sum );
   if (sum<minDiff)
   {
     minDiff = sum;
     counter = m;
+    //printf("\nTotal diff: %f and %i,%i with m as %i\n",minDiff,pointListM[counter][0],pointListM[counter][1],m);
   }
 }
-xPrada=pointListM[counter-1][0];
-yPrada=pointListM[counter-1][1];
+xPrada=pointListM[counter][0];
+yPrada=pointListM[counter][1];
 
-
+printf("\nPosition: %i,%i\n",xPrada,yPrada);
 
 
 	cuentasIFS=count1;
@@ -478,7 +485,7 @@ render18->Fill();
 
 }
 
-cout << "The Number of Events is: " << count <<endl;
+cout << "\nThe Number of Events is: " << count <<endl;
 
 fclose(out);
 

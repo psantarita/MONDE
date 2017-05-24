@@ -12,7 +12,6 @@ void render18(char *name="NOTHING", char *rootFile="render18.root")
 
  printf("The argument is %s\n", name);
  printf("The second argument is %s\n", rootFile);
- printf("2");
 
 TFile *f = new TFile(rootFile,"UPDATE");
 
@@ -20,7 +19,6 @@ TTree *render18 = new TTree("render18","Tree data");
 
 render18->Write("render18",TObject::kOverwrite);
 
-printf("var Declarations ini ");
 
 	Int_t d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16;
 
@@ -61,7 +59,6 @@ printf("var Declarations ini ");
 
   float inda[16];
 
-  printf("var Declarations");
 
 render18->Branch("ADetector1render18",&Adect1,"Adect1/D");
 render18->Branch("ADetector2render18",&Adect2,"Adect2/D");
@@ -86,7 +83,6 @@ render18->Branch("ytrender18",&yt,"yt/D");
 
 render18->Branch("xPradarender18",&xPrada,"xPrada/D");
 render18->Branch("yPradarender18",&yPrada,"yPrada/D");
-printf("make branch");
 
 // Detectores Externo
 
@@ -448,7 +444,7 @@ for(m=0;m<10833;m++)
 xPrada=pointListM[counter][0];
 yPrada=pointListM[counter][1];
 
-printf("\nPosition: %i,%i\n",xPrada,yPrada);
+// printf("\nPosition: %i,%i\n",xPrada,yPrada);
 
 
 	cuentasIFS=count1;

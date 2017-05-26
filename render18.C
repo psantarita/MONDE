@@ -421,6 +421,11 @@ for (i = 0; i < 16; i++) {
 //PRADA
 minDiff=100;
 m=0;
+int ot=0;
+    for(n=0;n<=15;n++)
+        if (normVec[n]>treshold)
+            ot++;
+if(ot>=4){
 for(m=0;m<10833;m++)
 {
   sum = 0;
@@ -447,9 +452,10 @@ for(m=0;m<10833;m++)
     //printf("\nTotal diff: %f and %i,%i with m as %i\n",minDiff,pointListM[counter][0],pointListM[counter][1],m);
   }
 }
+    
 xPrada=pointListM[counter][0];
 yPrada=pointListM[counter][1];
-
+}
 // printf("\nPosition: %i,%i\n",xPrada,yPrada);
 
 

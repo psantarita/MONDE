@@ -51,7 +51,7 @@ render18->Write("render18",TObject::kOverwrite);
 
 
 //Posiciones de los Detectores
-  Double_t Adetvec[16],normVec[16];
+  Double_t Adetvec[16],normVec[16],AdetvecPrada[16];
 
   Double_t posdetxvec[16] = {79.35, 49.35, 34.35, 2.5, 0., 2.5, 34.35, 49.35, 79.35, 109.35, 124.35, 156.35, 158.7, 156.2, 124.35, 109.35};
 
@@ -93,10 +93,10 @@ render18->Branch("yPradarender18",&yPrada,"yPrada/D");
 	Double_t ADectExt1, ADectExt2;
 
 
-render18->Branch("DetectorExt1render18",&DetectorExt1,"DetectorExt1/I");
+/*render18->Branch("DetectorExt1render18",&DetectorExt1,"DetectorExt1/I");
 render18->Branch("DetectorExt2render18",&DetectorExt2,"DetectorExt2/I");
 render18->Branch("ADetectorExt1render18",&ADetectorExt1,"ADetectorExt1/I");
-render18->Branch("ADetectorExt2render18",&ADetectorExt2,"ADetectorExt2/I");
+render18->Branch("ADetectorExt2render18",&ADetectorExt2,"ADetectorExt2/I");*/
 
 
 	BIASminext=0;
@@ -189,7 +189,23 @@ while(!feof(out))  {
 	fscanf(out,"%d %d %d %d %d %d %d %d",&d9,&d10,&d11,&d12,&d13,&d14,&d15,&d16);
 	count+=1;
 	count1=0;
-  if ( !d1 == 0 ) {
+
+  AdetvecPrada[0]=d1;
+  AdetvecPrada[1]=d2;
+  AdetvecPrada[2]=d3;
+  AdetvecPrada[3]=d4;
+  AdetvecPrada[4]=d5;
+  AdetvecPrada[5]=d6;
+  AdetvecPrada[6]=d7;
+  AdetvecPrada[7]=d8;
+  AdetvecPrada[8]=d9;
+  AdetvecPrada[9]=d10;
+  AdetvecPrada[10]=d11;
+  AdetvecPrada[11]=d12;
+  AdetvecPrada[12]=d13;
+  AdetvecPrada[13]=d14;
+  AdetvecPrada[14]=d15;
+  AdetvecPrada[15]=d16;
 //External Detectors
 /*
 		DetectorExt1=0;
@@ -221,8 +237,8 @@ while(!feof(out))  {
 
 		dect1=0;
 		Adect1=0;
-	//if (d1<BIASmax && d1>BIASmin) {
-  if (true) {
+	if (d1<BIASmax && d1>BIASmin) {
+
 
 		count1+=1;
 		dect1=d1;
@@ -234,8 +250,8 @@ while(!feof(out))  {
 
 	  dect2=0;
 		Adect2=0;
-	//if (d2<BIASmax && d2>BIASmin) {
-  if (true) {
+	if (d2<BIASmax && d2>BIASmin) {
+
 		count1+=1;
 		dect2=d2;
 		Adect2=(1.0*dect2)+0;
@@ -244,8 +260,8 @@ while(!feof(out))  {
 	}
 		dect3=0;
 		Adect3=0;
-	//if (d3<BIASmax && d3>BIASmin) {
-    if (true) {
+	if (d3<BIASmax && d3>BIASmin) {
+
 		count1+=1;
 		dect3=d3;
 		Adect3=(1.0*dect3)+0;
@@ -255,8 +271,8 @@ while(!feof(out))  {
 
 		dect4=0;
 		Adect4=0;
-	//if (d4<BIASmax && d4>BIASmin) {
-  if (true) {
+	if (d4<BIASmax && d4>BIASmin) {
+
 		count1+=1;
 		dect4=d4;
 		Adect4=(1.0*dect4)-0;
@@ -267,8 +283,8 @@ while(!feof(out))  {
 	}
 		dect5=0;
 		Adect5=0;
-	//if (d5<BIASmax && d5>BIASmin) {
-  if (true) {
+	if (d5<BIASmax && d5>BIASmin) {
+
 		count1+=1;
 		dect5=d5;
 		Adect5=(1.0*dect5)+0;
@@ -279,8 +295,8 @@ while(!feof(out))  {
 	}
 		dect6=0;
 		Adect6=0;
-	//if (d6<BIASmax && d6>BIASmin) {
-  if (true) {
+	if (d6<BIASmax && d6>BIASmin) {
+
 		count1+=1;
 		dect6=d6;
 		Adect6=(1.0*dect6)-0;
@@ -290,8 +306,7 @@ while(!feof(out))  {
 	}
 		dect7=0;
 		Adect7=0;
-	//if (d7<BIASmax && d7>BIASmin) {
-  if (true) {
+	if (d7<BIASmax && d7>BIASmin) {
 		count1+=1;
 		dect7=d7;
 		Adect7=(1.0*dect7)+0;
@@ -300,8 +315,7 @@ while(!feof(out))  {
 	}
 		dect8=0;
 		Adect8=0;
-	//if (d8<BIASmax && d8>BIASmin) {
-  if (true) {
+	if (d8<BIASmax && d8>BIASmin) {
 		count1+=1;
 		dect8=d8;
 		Adect8=(1.0*dect8)+0;
@@ -311,8 +325,7 @@ while(!feof(out))  {
 
 		dect9=0;
 		Adect9=0;
-	//if (d9<BIASmax && d9>BIASmin) {
-  if (true) {
+	if (d9<BIASmax && d9>BIASmin) {
 		count1+=1;
 		dect9=d9;
 		Adect9=(1.0*dect9)+0;
@@ -323,8 +336,7 @@ while(!feof(out))  {
 	}
 		dect10=0;
 		Adect10=0;
-	//if (d10<BIASmax && d10>BIASmin) {
-  if (true) {
+	if (d10<BIASmax && d10>BIASmin) {
 		count1+=1;
 		dect10=d10;
 		Adect10=(1.0*dect10)+0;
@@ -335,8 +347,7 @@ while(!feof(out))  {
 	}
 		dect11=0;
 		Adect11=0;
-	//if (d11<BIASmax && d11>BIASmin) {
-  if (true) {
+	if (d11<BIASmax && d11>BIASmin) {
 		count1+=1;
 		dect11=d11;
 		Adect11=(1.0*dect11)+0;
@@ -346,8 +357,7 @@ while(!feof(out))  {
 	}
 		dect12=0;
 		Adect12=0;
-	//if (d12<BIASmax && d12>BIASmin) {
-  if (true) {
+	if (d12<BIASmax && d12>BIASmin) {
 		count1+=1;
 		dect12=d12;
 		Adect12=(1.0*dect12)+0;
@@ -358,8 +368,7 @@ while(!feof(out))  {
 	}
 		dect13=0;
 		Adect13=0;
-	//if (d13<BIASmax && d13>BIASmin) {
-  if (true) {
+	if (d13<BIASmax && d13>BIASmin) {
 		count1+=1;
 		dect13=d13;
 		Adect13=(1.0*dect13)+0;
@@ -367,8 +376,7 @@ while(!feof(out))  {
 	}
 		dect14=0;
 		Adect14=0;
-	//if (d14<BIASmax && d14>BIASmin) {
-  if (true) {
+	if (d14<BIASmax && d14>BIASmin) {
 		count1+=1;
 		dect14=d14;
 		Adect14=(1.0*dect14)+0;
@@ -377,8 +385,7 @@ while(!feof(out))  {
 	}
 		dect15=0;
 		Adect15=0;
-	//if (d15<BIASmax && d15>BIASmin) {
-  if (true) {
+	if (d15<BIASmax && d15>BIASmin) {
 		count1+=1;
 		dect15=d15;
 		Adect15=(1.0*dect15)+0;
@@ -389,8 +396,7 @@ while(!feof(out))  {
 		dect16=0;
 		Adect16=0;
 
-	//if (d16<BIASmax && d16>BIASmin) {
-  if (true) {
+	if (d16<BIASmax && d16>BIASmin) {
 		count1+=1;
 		dect16=d16;
 		Adect16=(1.0*dect16)+0;
@@ -408,7 +414,7 @@ for (i = 0; i < 16; i++) {
 //printf("\nMax element: %f",max);
  //max=inda[0];
  for (int i=0; i<16; i++){
-           normVec[i]= Adetvec[i]/Adetvec[int(max)];
+           normVec[i]= AdetvecPrada[i]/AdetvecPrada[int(max)];
            //printf("\n%f / %f = %f  ",Adetvec[i],Adetvec[int(max)],normVec[i]);
        }
 
@@ -477,7 +483,7 @@ if(cuentasIFS>=2){
 render18->Fill();
 
 
-}
+
 
 }
 

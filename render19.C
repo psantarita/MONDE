@@ -233,11 +233,11 @@ for (i = 0; i < 16; i++) {
     //printf("%f \n", Adetvec[int(max)]);
 }
 
-printf("max= %f \n", Adetvec[int(max)]);
+//printf("max= %f \n", Adetvec[int(max)]);
  //max=inda[0];
  for (int i=0; i<16; i++){
            normVec[i]= AdetvecPrada[i]/AdetvecPrada[int(max)];
-           printf("\n%f / %f = %f  ",AdetvecPrada[i],AdetvecPrada[int(max)],normVec[i]);
+           //printf("\n%f / %f = %f  ",AdetvecPrada[i],AdetvecPrada[int(max)],normVec[i]);
        }
 
 //PRADA

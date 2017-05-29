@@ -142,14 +142,13 @@ printf("read database");
 
 int j = 0;
 double relSigsM[10833][16];
-Double_t relSigEvent[16];
+double relSigEvent[16];
 
 FILE *relSigs;
 relSigs = fopen("relSigs.txt","r");
 while(!feof(relSigs)&&j<10833)  {
 
-  fscanf(relSigs,"%lf %lf %lf
-  %lf %lf %lf %lf %lf",&rs1,&rs2,&rs3,&rs4,&rs5,&rs6,&rs7,&rs8);
+  fscanf(relSigs,"%lf %lf %lf %lf %lf %lf %lf %lf",&rs1,&rs2,&rs3,&rs4,&rs5,&rs6,&rs7,&rs8);
   fscanf(relSigs,"%lf %lf %lf %lf %lf %lf %lf %lf",&rs9,&rs10,&rs11,&rs12,&rs13,&rs14,&rs15,&rs16);
 
   relSigEvent[0]=rs1;
@@ -230,15 +229,16 @@ while(!feof(out))  {
 max=0;
  //TMath::Sort(size,Adetvec,inda,kTRUE);
 for (i = 0; i < 16; i++) {
-  if(Adetvec[i]>Adetvec[int(max)])
-    max = i;
+  if(AdetvecPrada[i]>AdetvecPrada[int(max)])
+    max = i ;
+    //printf("%f \n", Adetvec[int(max)]);		
 }
 
-//printf("\nMax element: %f",max);
+printf("max= %f \n", Adetvec[int(max)]);
  //max=inda[0];
  for (int i=0; i<16; i++){
            normVec[i]= AdetvecPrada[i]/AdetvecPrada[int(max)];
-           //printf("\n%f / %f = %f  ",Adetvec[i],Adetvec[int(max)],normVec[i]);
+           printf("\n%f / %f = %f  ",AdetvecPrada[i],AdetvecPrada[int(max)],normVec[i]);
        }
 
 //PRADA
@@ -261,7 +261,7 @@ for(m=0;m<10833;m++)
         diff=normVec[n]-relSigsM[m][n];
         diff *= diff;
         sum += diff;
-      //  printf("%i,%i: Over treshold with ",m,n);
+        //printf("sum diff  = %i \n", sum);
           //printf(" %f - %f = %f\n", normVec[n],relSigsM[m][n],diff);
         }
         //printf("\n\n");
@@ -280,7 +280,7 @@ for(m=0;m<10833;m++)
 xPrada=pointListM[counter][0];
 yPrada=pointListM[counter][1];
 }
-// printf("\nPosition: %i,%i\n",xPrada,yPrada);
+ printf("\nPosition: %i,%i\n",xPrada,yPrada);
 
 
 	cuentasIFS=count1;

@@ -32,7 +32,6 @@ render19->Write("render19",TObject::kOverwrite);
 
   Double_t xarribatodosa,yarribatodosa, abajotodosa;
   int pointList1,pointList2;
-
 	Double_t  xt, yt,xPrada,yPrada;
 
 	Double_t posdetx1,posdetx2,posdetx3,posdetx4,posdetx5,posdetx6,posdetx7,posdetx8,posdetx9,posdetx10,posdetx11,posdetx12,posdetx13,posdetx14,posdetx15,posdetx16;
@@ -231,7 +230,7 @@ max=0;
 for (i = 0; i < 16; i++) {
   if(AdetvecPrada[i]>AdetvecPrada[int(max)])
     max = i ;
-    //printf("%f \n", Adetvec[int(max)]);		
+    //printf("%f \n", Adetvec[int(max)]);
 }
 
 printf("max= %f \n", Adetvec[int(max)]);
@@ -248,7 +247,7 @@ int ot=0;
     for(n=0;n<=15;n++)
         if (normVec[n]>treshold)
             ot++;
-if(ot>=4){
+if(ot>=4 && ot<=6){
 count ++;
 for(m=0;m<10833;m++)
 {
@@ -261,11 +260,8 @@ for(m=0;m<10833;m++)
         diff=normVec[n]-relSigsM[m][n];
         diff *= diff;
         sum += diff;
-        //printf("sum diff  = %i \n", sum);
-          //printf(" %f - %f = %f\n", normVec[n],relSigsM[m][n],diff);
+        //printf("sum diff  = %i \n", sum); printf(" %f - %f = %f\n", normVec[n],relSigsM[m][n],diff);
         }
-        //printf("\n\n");
-    //else
       //printf("%i,%i: Under treshold  ",m,n);
     }
     //printf("\nActual sum %f  ",sum );
@@ -276,26 +272,12 @@ for(m=0;m<10833;m++)
     //printf("\nTotal diff: %f and %i,%i with m as %i\n",minDiff,pointListM[counter][0],pointListM[counter][1],m);
   }
 }
-
 xPrada=pointListM[counter][0];
 yPrada=pointListM[counter][1];
-}
  printf("\nPosition: %i,%i\n",xPrada,yPrada);
-
-
 	cuentasIFS=count1;
-
-	xarribatodos=0;
-	yarribatodos=0;
-	abajotodos=0;
-	xt=0;
-	yt=0;
-
 render19->Fill();
-
-
-
-
+}
 }
 
 cout << "\nThe Number of Events is: " << count <<endl;

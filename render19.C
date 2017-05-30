@@ -247,7 +247,7 @@ int ot=0;
     for(n=0;n<=15;n++)
         if (normVec[n]>treshold)
             ot++;
-if(ot>=4 && ot<=6){
+if(ot>=4){
 count ++;
 for(m=0;m<10833;m++)
 {
@@ -274,7 +274,7 @@ for(m=0;m<10833;m++)
 }
 xPrada=pointListM[counter][0];
 yPrada=pointListM[counter][1];
- printf("\nPosition: %i,%i\n",xPrada,yPrada);
+// printf("\nPosition: %i,%i\n",xPrada,yPrada);
 	cuentasIFS=count1;
 render19->Fill();
 }

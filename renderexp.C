@@ -284,6 +284,7 @@ m = 5417;
 //Condicion de no ser un minimo
 while (onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
 {
+      //Incerse positive well inizialization
       riDiff = 100;
       leDiff = 100;
       doDiff = 100;
@@ -360,7 +361,7 @@ while (onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
               }
           }
       }
-
+      //Actualize m state
       if(onDiff >= leDiff)
         m--;
       else
@@ -371,6 +372,11 @@ while (onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
         {
           if(onDiff >= doDiff)
             m-157;
+          else
+          {
+            if(onDiff >= upDiff)
+              m+157;
+          }
         }
       }
 

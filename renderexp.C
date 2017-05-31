@@ -284,17 +284,96 @@ m = 5417;
 //Condicion de no ser un minimo
 while (onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
 {
-  //Ontencion de la diferencia actual
-  onDiff = 0;
-  for(n=0;n<=15;n++)
-    {
-    if(normVec[n]>treshold)
+      riDiff = 100;
+      leDiff = 100;
+      doDiff = 100;
+      upDiff = 100;
+
+      //Obtencion de la diferencia actual
+      onDiff = 0;
+      for(n=0;n<=15;n++)
+      {
+          if(normVec[n]>treshold)
+          {
+              diff=normVec[n]-relSigsM[m][n];
+              diff *= diff;
+              onDiff += diff;
+          }
+      }
+
+      //Obtencion de la diferencia izquierda
+      if(m%157 != 0)
+      {
+          leDiff = 0;
+          for(n=0;n<=15;n++)
+          {
+              if(normVec[n]>treshold)
+              {
+                  diff=normVec[n]-relSigsM[m-1][n];
+                  diff *= diff;
+                  leDiff += diff;
+              }
+          }
+      }
+
+      //Obtencion de la diferencia derecha
+      if(m%157 != 156)
+      {
+          riDiff = 0;
+          for(n=0;n<=15;n++)
+          {
+              if(normVec[n]>treshold)
+              {
+                  diff=normVec[n]-relSigsM[m+1][n];
+                  diff *= diff;
+                  riDiff += diff;
+              }
+          }
+      }
+
+      //Obtencion de la diferencia superior
+      if(m/157 != 156)
+      {
+          upDiff = 0;
+          for(n=0;n<=15;n++)
+          {
+              if(normVec[n]>treshold)
+              {
+                  diff=normVec[n]-relSigsM[m-1][n];
+                  diff *= diff;
+                  upDiff += diff;
+              }
+          }
+      }
+
+      //Obtencion de la diferencia inferior
+      if(m/157 != 0)
+      {
+          doDiff = 0;
+          for(n=0;n<=15;n++)
+          {
+              if(normVec[n]>treshold)
+              {
+                  diff=normVec[n]-relSigsM[m-1][n];
+                  diff *= diff;
+                  doDiff += diff;
+              }
+          }
+      }
+
+      if(onDiff >= leDiff)
+        m--;
+      else
+      {
+        if(onDiff >= riDiff)
+          m++;
+        else
         {
-        diff=normVec[n]-relSigsM[m][n];
-        diff *= diff;
-        onDiff += diff;
+          if(onDiff >= doDiff)
+            m-157;
         }
-    }
+      }
+
 }
 
 xPrada=pointListM[counter][0];

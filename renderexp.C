@@ -8,7 +8,7 @@
 #include <Riostream.h>
 #include <math.h>
 
-void render19(char *name="NOTHING", char *rootFile="render19.root")
+void renderexp(char *name="NOTHING", char *rootFile="renderexp.root")
 {
 
  printf("The argument is %s\n", name);
@@ -16,9 +16,9 @@ void render19(char *name="NOTHING", char *rootFile="render19.root")
 
 TFile *f = new TFile(rootFile,"UPDATE");
 
-TTree *render19 = new TTree("render19","Tree data");
+TTree *renderexp = new TTree("renderexp","Tree data");
 
-render19->Write("render19",TObject::kOverwrite);
+renderexp->Write("renderexp",TObject::kOverwrite);
 
 
 Int_t d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16;
@@ -60,29 +60,29 @@ Int_t dect1,dect2,dect3,dect4,dect5,dect6,dect7,dect8,dect9,dect10,dect11,dect12
   float inda[16];
 
 
-render19->Branch("ADetector1render19",&Adect1,"Adect1/D");
-render19->Branch("ADetector2render19",&Adect2,"Adect2/D");
-render19->Branch("ADetector3render19",&Adect3,"Adect3/D");
-render19->Branch("ADetector4render19",&Adect4,"Adect4/D");
-render19->Branch("ADetector5render19",&Adect5,"Adect5/D");
-render19->Branch("ADetector6render19",&Adect6,"Adect6/D");
-render19->Branch("ADetector7render19",&Adect7,"Adect7/D");
-render19->Branch("ADetector8render19",&Adect8,"Adect8/D");
-render19->Branch("ADetector9render19",&Adect9,"Adect9/D");
-render19->Branch("ADetector10render19",&Adect10,"Adect10/D");
-render19->Branch("ADetector11render19",&Adect11,"Adect11/D");
-render19->Branch("ADetector12render19",&Adect12,"Adect12/D");
-render19->Branch("ADetector13render19",&Adect13,"Adect13/D");
-render19->Branch("ADetector14render19",&Adect14,"Adect14/D");
-render19->Branch("ADetector15render19",&Adect15,"Adect15/D");
-render19->Branch("ADetector16render19",&Adect16,"Adect16/D");
+renderexp->Branch("ADetector1renderexp",&Adect1,"Adect1/D");
+renderexp->Branch("ADetector2renderexp",&Adect2,"Adect2/D");
+renderexp->Branch("ADetector3renderexp",&Adect3,"Adect3/D");
+renderexp->Branch("ADetector4renderexp",&Adect4,"Adect4/D");
+renderexp->Branch("ADetector5renderexp",&Adect5,"Adect5/D");
+renderexp->Branch("ADetector6renderexp",&Adect6,"Adect6/D");
+renderexp->Branch("ADetector7renderexp",&Adect7,"Adect7/D");
+renderexp->Branch("ADetector8renderexp",&Adect8,"Adect8/D");
+renderexp->Branch("ADetector9renderexp",&Adect9,"Adect9/D");
+renderexp->Branch("ADetector10renderexp",&Adect10,"Adect10/D");
+renderexp->Branch("ADetector11renderexp",&Adect11,"Adect11/D");
+renderexp->Branch("ADetector12renderexp",&Adect12,"Adect12/D");
+renderexp->Branch("ADetector13renderexp",&Adect13,"Adect13/D");
+renderexp->Branch("ADetector14renderexp",&Adect14,"Adect14/D");
+renderexp->Branch("ADetector15renderexp",&Adect15,"Adect15/D");
+renderexp->Branch("ADetector16renderexp",&Adect16,"Adect16/D");
 
 
-render19->Branch("xtrender19",&xt,"xt/D");
-render19->Branch("ytrender19",&yt,"yt/D");
+renderexp->Branch("xtrenderexp",&xt,"xt/D");
+renderexp->Branch("ytrenderexp",&yt,"yt/D");
 
-render19->Branch("xPradarender19",&xPrada,"xPrada/D");
-render19->Branch("yPradarender19",&yPrada,"yPrada/D");
+renderexp->Branch("xPradarenderexp",&xPrada,"xPrada/D");
+renderexp->Branch("yPradarenderexp",&yPrada,"yPrada/D");
 
 // Detectores Externo
 
@@ -93,10 +93,10 @@ render19->Branch("yPradarender19",&yPrada,"yPrada/D");
 	Double_t ADectExt1, ADectExt2;
 
 
-/*render19->Branch("DetectorExt1render19",&DetectorExt1,"DetectorExt1/I");
-render19->Branch("DetectorExt2render19",&DetectorExt2,"DetectorExt2/I");
-render19->Branch("ADetectorExt1render19",&ADetectorExt1,"ADetectorExt1/I");
-render19->Branch("ADetectorExt2render19",&ADetectorExt2,"ADetectorExt2/I");*/
+/*renderexp->Branch("DetectorExt1renderexp",&DetectorExt1,"DetectorExt1/I");
+renderexp->Branch("DetectorExt2renderexp",&DetectorExt2,"DetectorExt2/I");
+renderexp->Branch("ADetectorExt1renderexp",&ADetectorExt1,"ADetectorExt1/I");
+renderexp->Branch("ADetectorExt2renderexp",&ADetectorExt2,"ADetectorExt2/I");*/
 
 
 	BIASminext=0;
@@ -112,7 +112,7 @@ treshold = 0.15;
 
 	Int_t cuentasIFS;
 
-render19->Branch("cuentasIFS",&cuentasIFS,"cuentasIFS/I");
+renderexp->Branch("cuentasIFS",&cuentasIFS,"cuentasIFS/I");
 
 //read the points list
 printf("read plist");
@@ -273,18 +273,27 @@ for(m=0;m<10833;m++)
     //printf("\nTotal diff: %f and %i,%i with m as %i\n",minDiff,pointListM[counter][0],pointListM[counter][1],m);
   }
 }*/
-int m;
-float riDiff,leDiff,doDiff,upDiff,onDiff;
-onDiff = 2;
-riDiff = 1;
-leDiff = 1;
-doDiff = 1;
-upDiff = 1;
-m = 5417;
 //Condicion de no ser un minimo
-while (onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
+int ot=0;
+for(n=0;n<=15;n++)
+  if (normVec[n]>treshold)
+    ot++;
+if (ot >=4)
 {
-      //Incerse positive well inizialization
+  int m, microcount;
+  float riDiff,leDiff,doDiff,upDiff,onDiff;
+  onDiff = 2;
+  riDiff = 1;
+  leDiff = 1;
+  doDiff = 1;
+  upDiff = 1;
+  m = 5000;
+  microcount = 0;
+
+while ((onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)&& microcount <= 2000)
+{
+    microcount++;
+      //Inverse positive well inizialization
       riDiff = 100;
       leDiff = 100;
       doDiff = 100;
@@ -303,14 +312,14 @@ while (onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
       }
 
       //Obtencion de la diferencia izquierda
-      if(m%157 != 0)
+      if(m/69 >= 1)
       {
           leDiff = 0;
           for(n=0;n<=15;n++)
           {
               if(normVec[n]>treshold)
               {
-                  diff=normVec[n]-relSigsM[m-1][n];
+                  diff=normVec[n]-relSigsM[m-69][n];
                   diff *= diff;
                   leDiff += diff;
               }
@@ -318,14 +327,14 @@ while (onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
       }
 
       //Obtencion de la diferencia derecha
-      if(m%157 != 156)
+      if(m/69 <= 156)
       {
           riDiff = 0;
           for(n=0;n<=15;n++)
           {
               if(normVec[n]>treshold)
               {
-                  diff=normVec[n]-relSigsM[m+1][n];
+                  diff=normVec[n]-relSigsM[m+69][n];
                   diff *= diff;
                   riDiff += diff;
               }
@@ -333,14 +342,14 @@ while (onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
       }
 
       //Obtencion de la diferencia superior
-      if(m/157 != 156)
+      if(m%69 != 68)
       {
           upDiff = 0;
           for(n=0;n<=15;n++)
           {
               if(normVec[n]>treshold)
               {
-                  diff=normVec[n]-relSigsM[m-1][n];
+                  diff=normVec[n]-relSigsM[m+1][n];
                   diff *= diff;
                   upDiff += diff;
               }
@@ -348,7 +357,7 @@ while (onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
       }
 
       //Obtencion de la diferencia inferior
-      if(m/157 != 0)
+      if(m%69 != 0)
       {
           doDiff = 0;
           for(n=0;n<=15;n++)
@@ -361,40 +370,54 @@ while (onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
               }
           }
       }
+      printf("\n\t %f \n",upDiff);
+      printf("%f %f %f\n",leDiff,onDiff,riDiff);
+      printf("\t %f \n",doDiff);
+
       //Actualize m state
       if(onDiff >= leDiff)
-        m--;
+      {
+        m-=69;
+        printf("\n M pointer left %i",m);
+      }
       else
       {
         if(onDiff >= riDiff)
-          m++;
+        {
+          m+=69;
+          printf("\n M pointer right %i",m);
+        }
         else
         {
           if(onDiff >= doDiff)
-            m-157;
+          {
+            m--;
+            printf("\n M pointer down %i",m);
+          }
           else
           {
             if(onDiff >= upDiff)
-              m+157;
+            {
+              m++;
+              printf("\n M pointer UP %i",m);
+            }
           }
         }
       }
+    }
 
-}
-
-xPrada=pointListM[counter][0];
-yPrada=pointListM[counter][1];
+xPrada=pointListM[m][0];
+yPrada=pointListM[m][1];
  printf("\nPosition: %i,%i\n",xPrada,yPrada);
 	cuentasIFS=count1;
-render19->Fill();
+renderexp->Fill();
 }
 }
 
-cout << "\nThe Number of Events is: " << count <<endl;
+
+//cout << "\nThe Number of Events is: " << count <<endl;
 
 fclose(out);
 
 f->Write("",TObject::kOverwrite);
-
-
 }

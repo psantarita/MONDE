@@ -20,8 +20,8 @@ TTree *render19 = new TTree("render19","Tree data");
 render19->Write("render19",TObject::kOverwrite);
 
 
-	Int_t d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16;
-
+	Double_t d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16;
+  
 	Int_t dect1,dect2,dect3,dect4,dect5,dect6,dect7,dect8,dect9,dect10,dect11,dect12,dect13,dect14,dect15,dect16;
 
   double rs1,rs2,rs3,rs4,rs5,rs6,rs7,rs8,rs9,rs10,rs11,rs12,rs13, rs14,rs15,rs16;
@@ -247,7 +247,8 @@ int ot=0;
     for(n=0;n<=15;n++)
         if (normVec[n]>treshold)
             ot++;
-if(ot>=4){
+//if(ot>=4){
+if(1==1){
 count ++;
 for(m=0;m<10833;m++)
 {

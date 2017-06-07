@@ -7,6 +7,17 @@
 #include <TStyle.h>
 #include <Riostream.h>
 #include <math.h>
+#include <time.h>
+
+#ifndef CLOCKS_PER_SEC
+#ifdef CLK_TCK
+#define CLOCKS_PER_SEC CLK_TCK   /* Some systems still use this older form */
+#endif
+#endif
+#ifndef CLOCKS_PER_SEC
+#define CLOCKS_PER_SEC 1000000   /* For non-ANSI systems, like SunOS! */
+#endif
+
 
 void renderexp(char *name="NOTHING", char *rootFile="renderexp.root")
 {
@@ -20,6 +31,7 @@ TTree *renderexp = new TTree("renderexp","Tree data");
 
 renderexp->Write("renderexp",TObject::kOverwrite);
 
+clock_t locstart, locend, glostart, gloend;
 
 Int_t d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16;
 
@@ -181,6 +193,7 @@ printf("opening %s\n",name);
 int count = 0;
 int count1 = 0;
 int count2 = 0;
+glostart =  clock();
 while(!feof(out))  {
 
 	//fscanf(out,"%d %d",&d1ext, &d2ext);
@@ -224,7 +237,7 @@ while(!feof(out))  {
 
 	}
 */
-
+locstart= clock();
  //Normalization of Event
 max=0;
  //TMath::Sort(size,Adetvec,inda,kTRUE);
@@ -287,7 +300,7 @@ if (ot >=4)
   leDiff = 1;
   doDiff = 1;
   upDiff = 1;
-  m = 5000;
+  m = 5400;
   microcount = 0;
 
 while ((onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)&& microcount <= 2000)
@@ -370,36 +383,36 @@ while ((onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
               }
           }
       }
-      printf("\n\t %f \n",upDiff);
+      /*printf("\n\t %f \n",upDiff);
       printf("%f %f %f\n",leDiff,onDiff,riDiff);
       printf("\t %f \n",doDiff);
-
+*/
       //Actualize m state
       if(onDiff >= leDiff)
       {
         m-=69;
-        printf("\n M pointer left %i",m);
+        //printf("\n M pointer left %i",m);
       }
       else
       {
         if(onDiff >= riDiff)
         {
           m+=69;
-          printf("\n M pointer right %i",m);
+          //printf("\n M pointer right %i",m);
         }
         else
         {
           if(onDiff >= doDiff)
           {
             m--;
-            printf("\n M pointer down %i",m);
+            //printf("\n M pointer down %i",m);
           }
           else
           {
             if(onDiff >= upDiff)
             {
               m++;
-              printf("\n M pointer UP %i",m);
+              //printf("\n M pointer UP %i",m);
             }
           }
         }
@@ -408,7 +421,8 @@ while ((onDiff > riDiff || onDiff > leDiff || onDiff > doDiff|| onDiff > upDiff)
 
 xPrada=pointListM[m][0];
 yPrada=pointListM[m][1];
- printf("\nPosition: %i,%i\n",xPrada,yPrada);
+locend=clock();
+ printf("\nPosition: %i,%i\n Time spent: %f ns.",xPrada,yPrada,(locend-locstart)/CLOCKS_PER_SEC);
 	cuentasIFS=count1;
 renderexp->Fill();
 }
@@ -418,6 +432,7 @@ renderexp->Fill();
 //cout << "\nThe Number of Events is: " << count <<endl;
 
 fclose(out);
-
+gloend= clock();
+printf("\nTotal time: %f ns.",(gloend-glostart)/CLOCKS_PER_SEC);
 f->Write("",TObject::kOverwrite);
 }
